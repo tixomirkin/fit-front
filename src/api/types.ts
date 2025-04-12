@@ -27,3 +27,23 @@ export type rawClient = {
 export type Client = Omit<rawClient, 'createdAt'> & {
     createdAt: DateTime
 }
+
+export type newClient = {
+    name: string
+    innerName?: string
+    description?: string
+}
+
+export type MetaData = {
+    page: number;
+    take: number;
+    itemCount: number;
+    pageCount: number;
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+}
+
+export type PaginationData<T> = {
+    data: T[],
+    meta: MetaData
+}

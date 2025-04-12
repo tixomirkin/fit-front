@@ -1,10 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import {
     BreadcrumbItem,
-    BreadcrumbLink,
     BreadcrumbList,
     BreadcrumbPage,
-    BreadcrumbSeparator
 } from "@/components/ui/breadcrumb.tsx";
 import {HeaderWithBreadcrums} from "@/components/sidebar/header-with-breadcrums.tsx";
 import {useAuth} from "@/hooks/use-auth.ts";

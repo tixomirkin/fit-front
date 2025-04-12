@@ -16,6 +16,7 @@ export default defineConfig({
     },
   },
   server: {
+    allowedHosts: ["localhost", "382008c3-15ef-4539-9e1b-1e286c2133ff-00-20vo57aqaulnu.worf.replit.dev"],
     proxy: {
       '/api': {
         target: 'http://localhost:4000',

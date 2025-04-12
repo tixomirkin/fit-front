@@ -23,7 +23,7 @@ const options = linkOptions([
         activeProps: { isActive: true },
     },
     {
-        to: "/about",
+        to: "/schedule",
         title: "Расписание",
         icon: CalendarRange,
         activeProps: { isActive: true },

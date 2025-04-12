@@ -16,7 +16,10 @@ import { Route as AppRouteImport } from './routes/_app/route'
 import { Route as AppIndexImport } from './routes/_app/index'
 import { Route as AppDisImport } from './routes/_app/dis'
 import { Route as AppAboutImport } from './routes/_app/about'
+import { Route as AppScheduleIndexImport } from './routes/_app/schedule/index'
 import { Route as AppClientsIndexImport } from './routes/_app/clients/index'
+import { Route as AppClientsNewImport } from './routes/_app/clients/new'
+import { Route as AppClientsClientIdIndexImport } from './routes/_app/clients/$clientId/index'
 
 // Create/Update Routes
 
@@ -49,9 +52,27 @@ const AppAboutRoute = AppAboutImport.update({
   getParentRoute: () => AppRouteRoute,
 } as any)
 
+const AppScheduleIndexRoute = AppScheduleIndexImport.update({
+  id: '/schedule/',
+  path: '/schedule/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+
 const AppClientsIndexRoute = AppClientsIndexImport.update({
   id: '/clients/',
   path: '/clients/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+
+const AppClientsNewRoute = AppClientsNewImport.update({
+  id: '/clients/new',
+  path: '/clients/new',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+
+const AppClientsClientIdIndexRoute = AppClientsClientIdIndexImport.update({
+  id: '/clients/$clientId/',
+  path: '/clients/$clientId/',
   getParentRoute: () => AppRouteRoute,
 } as any)
 
@@ -94,11 +115,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexImport
       parentRoute: typeof AppRouteImport
     }
+    '/_app/clients/new': {
+      id: '/_app/clients/new'
+      path: '/clients/new'
+      fullPath: '/clients/new'
+      preLoaderRoute: typeof AppClientsNewImport
+      parentRoute: typeof AppRouteImport
+    }
     '/_app/clients/': {
       id: '/_app/clients/'
       path: '/clients'
       fullPath: '/clients'
       preLoaderRoute: typeof AppClientsIndexImport
+      parentRoute: typeof AppRouteImport
+    }
+    '/_app/schedule/': {
+      id: '/_app/schedule/'
+      path: '/schedule'
+      fullPath: '/schedule'
+      preLoaderRoute: typeof AppScheduleIndexImport
+      parentRoute: typeof AppRouteImport
+    }
+    '/_app/clients/$clientId/': {
+      id: '/_app/clients/$clientId/'
+      path: '/clients/$clientId'
+      fullPath: '/clients/$clientId'
+      preLoaderRoute: typeof AppClientsClientIdIndexImport
       parentRoute: typeof AppRouteImport
     }
   }
@@ -110,14 +152,20 @@ interface AppRouteRouteChildren {
   AppAboutRoute: typeof AppAboutRoute
   AppDisRoute: typeof AppDisRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppClientsNewRoute: typeof AppClientsNewRoute
   AppClientsIndexRoute: typeof AppClientsIndexRoute
+  AppScheduleIndexRoute: typeof AppScheduleIndexRoute
+  AppClientsClientIdIndexRoute: typeof AppClientsClientIdIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppAboutRoute: AppAboutRoute,
   AppDisRoute: AppDisRoute,
   AppIndexRoute: AppIndexRoute,
+  AppClientsNewRoute: AppClientsNewRoute,
   AppClientsIndexRoute: AppClientsIndexRoute,
+  AppScheduleIndexRoute: AppScheduleIndexRoute,
+  AppClientsClientIdIndexRoute: AppClientsClientIdIndexRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
@@ -130,7 +178,10 @@ export interface FileRoutesByFullPath {
   '/about': typeof AppAboutRoute
   '/dis': typeof AppDisRoute
   '/': typeof AppIndexRoute
+  '/clients/new': typeof AppClientsNewRoute
   '/clients': typeof AppClientsIndexRoute
+  '/schedule': typeof AppScheduleIndexRoute
+  '/clients/$clientId': typeof AppClientsClientIdIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -138,7 +189,10 @@ export interface FileRoutesByTo {
   '/about': typeof AppAboutRoute
   '/dis': typeof AppDisRoute
   '/': typeof AppIndexRoute
+  '/clients/new': typeof AppClientsNewRoute
   '/clients': typeof AppClientsIndexRoute
+  '/schedule': typeof AppScheduleIndexRoute
+  '/clients/$clientId': typeof AppClientsClientIdIndexRoute
 }
 
 export interface FileRoutesById {
@@ -148,14 +202,34 @@ export interface FileRoutesById {
   '/_app/about': typeof AppAboutRoute
   '/_app/dis': typeof AppDisRoute
   '/_app/': typeof AppIndexRoute
+  '/_app/clients/new': typeof AppClientsNewRoute
   '/_app/clients/': typeof AppClientsIndexRoute
+  '/_app/schedule/': typeof AppScheduleIndexRoute
+  '/_app/clients/$clientId/': typeof AppClientsClientIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/login' | '/about' | '/dis' | '/' | '/clients'
+  fullPaths:
+    | ''
+    | '/login'
+    | '/about'
+    | '/dis'
+    | '/'
+    | '/clients/new'
+    | '/clients'
+    | '/schedule'
+    | '/clients/$clientId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/about' | '/dis' | '/' | '/clients'
+  to:
+    | '/login'
+    | '/about'
+    | '/dis'
+    | '/'
+    | '/clients/new'
+    | '/clients'
+    | '/schedule'
+    | '/clients/$clientId'
   id:
     | '__root__'
     | '/_app'
@@ -163,7 +237,10 @@ export interface FileRouteTypes {
     | '/_app/about'
     | '/_app/dis'
     | '/_app/'
+    | '/_app/clients/new'
     | '/_app/clients/'
+    | '/_app/schedule/'
+    | '/_app/clients/$clientId/'
   fileRoutesById: FileRoutesById
 }
 
@@ -197,7 +274,10 @@ export const routeTree = rootRoute
         "/_app/about",
         "/_app/dis",
         "/_app/",
-        "/_app/clients/"
+        "/_app/clients/new",
+        "/_app/clients/",
+        "/_app/schedule/",
+        "/_app/clients/$clientId/"
       ]
     },
     "/login": {
@@ -215,8 +295,20 @@ export const routeTree = rootRoute
       "filePath": "_app/index.tsx",
       "parent": "/_app"
     },
+    "/_app/clients/new": {
+      "filePath": "_app/clients/new.tsx",
+      "parent": "/_app"
+    },
     "/_app/clients/": {
       "filePath": "_app/clients/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/schedule/": {
+      "filePath": "_app/schedule/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/clients/$clientId/": {
+      "filePath": "_app/clients/$clientId/index.tsx",
       "parent": "/_app"
     }
   }

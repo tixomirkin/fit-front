@@ -1,6 +1,9 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
+import {useMaskito} from "@maskito/react";
+import { MaskitoOptions } from "@maskito/core";
+import {useImperativeHandle} from "react";
 
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
@@ -18,4 +21,13 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   )
 }
 
-export { Input }
+function MaskInput({ref, options, ...props} : React.ComponentProps<"input">&{options: MaskitoOptions}) {
+    const maskitoRef = useMaskito({options});
+
+
+    return (
+        <Input {...props} ref={maskitoRef}/>
+    )
+}
+
+export { Input, MaskInput }
